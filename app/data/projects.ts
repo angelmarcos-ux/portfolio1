@@ -47,7 +47,8 @@ export const projectsData = [
     type: 'Machine Learning',
     description: 'Global supply chain optimization engine utilizing deep learning to predict route inefficiencies and reduce shipping costs.',
     tags: ['Python', 'FastAPI', 'React', 'PostgreSQL'],
-    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=global%20logistics%20supply%20chain%20ai%20dashboard%20dark%20mode%20data%20visualization&image_size=landscape_16_9'
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=global%20logistics%20supply%20chain%20ai%20dashboard%20dark%20mode%20data%20visualization&image_size=landscape_16_9',
+    liveUrl: 'https://project-3-git-master-angelmarcos-uxs-projects.vercel.app/'
   },
   {
     folder: 'project-4',
