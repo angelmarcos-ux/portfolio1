@@ -66,6 +66,33 @@ const changeQty = (id, delta) => {
 
 const format = (n) => n.toLocaleString()
 
+const isFittingOpen = ref(false)
+const isArtisansOpen = ref(false)
+
+const fitting = ref({ name: '', email: '', date: '' })
+
+const bookFitting = () => {
+  if (!fitting.value.name.trim() || !fitting.value.email.trim() || !fitting.value.date.trim()) {
+    showToast('Please complete all fields to book your fitting')
+    return
+  }
+  isFittingOpen.value = false
+  fitting.value = { name: '', email: '', date: '' }
+  showToast('Fitting requested — concierge will confirm within 24h')
+}
+
+const checkout = () => {
+  isCartOpen.value = false
+  showToast('Secure checkout is by invitation — concierge will reach out')
+}
+
+const artisans = [
+  { name: 'Camille Laurent', role: 'Maison Horlogère', years: '23 yrs', bio: 'Master watchmaker behind the Obsidian Chronograph and every numbered timepiece.', img: `https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop` },
+  { name: 'Sofia Marchetti', role: 'Nez de la Maison', years: '17 yrs', bio: 'The nose behind Noir and our archive of heritage fragrances.', img: `https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=800&auto=format&fit=crop` },
+  { name: 'Étienne Beauvoir', role: 'Maître Maroquinier', years: '19 yrs', bio: 'Hand-cuts and saddle-stitches every leather piece, from weekender to loafer.', img: `https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop` },
+  { name: 'Yuki Tanaka', role: 'Directeur Joaillerie', years: '21 yrs', bio: 'Sets every stone in the Cascade collection under a single loupe, by hand.', img: `https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop` }
+]
+
 const stats = [
   { value: 120, suffix: '+', label: 'Private Ateliers' },
   { value: 42, suffix: '', label: 'Countries Served' },
@@ -333,7 +360,8 @@ onUnmounted(() => {
           </div>
         </div>
 
-        <div class="relative group overflow-hidden bg-amber-900/10 reveal">
+        <div class="relative group overflow-hidden bg-amber-900/10 reveal cursor-pointer" role="button" tabindex="0"
+             @click="isFittingOpen = true" @keydown.enter="isFittingOpen = true">
           <div class="absolute inset-0 flex flex-col items-center justify-center p-8 text-center transition-colors group-hover:bg-amber-900/30">
             <ShoppingBag class="w-8 h-8 mb-4 text-amber-400" />
             <h3 class="text-2xl font-light mb-4">Book a Private Fitting</h3>
@@ -446,7 +474,7 @@ onUnmounted(() => {
           <a href="#collection" class="btn-shine inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-semibold uppercase tracking-widest text-sm hover:bg-amber-400 transition-colors">
             Shop the Collection <ArrowRight class="w-4 h-4" />
           </a>
-          <button class="px-8 py-4 border border-white/20 uppercase tracking-widest text-sm font-semibold hover:bg-white/10 transition-colors">
+          <button @click="isArtisansOpen = true" class="px-8 py-4 border border-white/20 uppercase tracking-widest text-sm font-semibold hover:bg-white/10 transition-colors">
             Meet the Artisans
           </button>
         </div>
@@ -585,9 +613,77 @@ onUnmounted(() => {
               <span class="text-xl font-mono text-white">${{ format(cartTotal) }}</span>
             </div>
             <p class="text-xs text-slate-500 mb-6 flex items-center gap-2"><Check class="w-3 h-3 text-emerald-400" /> Complimentary shipping & duties included</p>
-            <button class="w-full py-4 bg-white text-black font-bold uppercase tracking-widest text-sm hover:bg-amber-400 transition-colors">
+            <button @click="checkout" class="w-full py-4 bg-white text-black font-bold uppercase tracking-widest text-sm hover:bg-amber-400 transition-colors">
               Proceed to Checkout
             </button>
+          </div>
+        </div>
+      </div>
+    </Transition>
+
+    <!-- ================= FITTING MODAL ================= -->
+    <Transition name="fade">
+      <div v-if="isFittingOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-6">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm cursor-pointer" @click="isFittingOpen = false"></div>
+        <div class="relative w-full max-w-md bg-[#0b0b0b] border border-white/10 p-8 shadow-2xl">
+          <div class="flex justify-between items-start mb-6">
+            <div>
+              <p class="text-amber-400 text-[10px] uppercase tracking-[0.3em] font-bold mb-2">Private Client Service</p>
+              <h3 class="text-2xl font-light tracking-wide">Book a <span class="font-bold">Private Fitting</span></h3>
+            </div>
+            <button @click="isFittingOpen = false" class="p-2 hover:bg-white/10 rounded-full transition-colors"><X class="w-5 h-5" /></button>
+          </div>
+          <form class="space-y-5" @submit.prevent="bookFitting">
+            <div>
+              <label for="fit-name" class="block text-[11px] uppercase tracking-[0.2em] text-slate-400 mb-2">Full Name</label>
+              <input id="fit-name" v-model="fitting.name" type="text" placeholder="Alexandre Dumas"
+                     class="w-full bg-transparent border border-white/15 px-4 py-3 text-sm focus:outline-none focus:border-amber-400 transition-colors placeholder:text-slate-600" />
+            </div>
+            <div>
+              <label for="fit-email" class="block text-[11px] uppercase tracking-[0.2em] text-slate-400 mb-2">Email</label>
+              <input id="fit-email" v-model="fitting.email" type="email" placeholder="you@concierge.com"
+                     class="w-full bg-transparent border border-white/15 px-4 py-3 text-sm focus:outline-none focus:border-amber-400 transition-colors placeholder:text-slate-600" />
+            </div>
+            <div>
+              <label for="fit-date" class="block text-[11px] uppercase tracking-[0.2em] text-slate-400 mb-2">Preferred Date</label>
+              <input id="fit-date" v-model="fitting.date" type="date"
+                     class="w-full bg-transparent border border-white/15 px-4 py-3 text-sm focus:outline-none focus:border-amber-400 transition-colors [color-scheme:dark]" />
+            </div>
+            <button type="submit" class="w-full btn-shine bg-amber-400 text-black py-4 text-[11px] uppercase tracking-[0.25em] font-bold hover:bg-white transition-colors">
+              Request Fitting
+            </button>
+            <p class="text-center text-xs text-slate-500">90 minutes · Champagne · One-on-one with a Style Director</p>
+          </form>
+        </div>
+      </div>
+    </Transition>
+
+    <!-- ================= ARTISANS MODAL ================= -->
+    <Transition name="fade">
+      <div v-if="isArtisansOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-6">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm cursor-pointer" @click="isArtisansOpen = false"></div>
+        <div class="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto bg-[#0b0b0b] border border-white/10 p-8 shadow-2xl">
+          <div class="flex justify-between items-start mb-8">
+            <div>
+              <p class="text-amber-400 text-[10px] uppercase tracking-[0.3em] font-bold mb-2">The Hands Behind the Maison</p>
+              <h3 class="text-3xl font-light tracking-wide">Meet the <span class="font-bold">Artisans</span></h3>
+            </div>
+            <button @click="isArtisansOpen = false" class="p-2 hover:bg-white/10 rounded-full transition-colors"><X class="w-5 h-5" /></button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div v-for="a in artisans" :key="a.name" class="group border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] transition-colors">
+              <div class="aspect-[4/3] overflow-hidden">
+                <img :src="a.img" :alt="a.name" class="w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-105" />
+              </div>
+              <div class="p-5">
+                <div class="flex justify-between items-baseline mb-1">
+                  <h4 class="font-semibold tracking-wide">{{ a.name }}</h4>
+                  <span class="text-[10px] uppercase tracking-[0.2em] text-slate-500">{{ a.years }}</span>
+                </div>
+                <p class="text-[11px] uppercase tracking-[0.2em] text-amber-400 font-bold mb-2">{{ a.role }}</p>
+                <p class="text-sm text-slate-400 leading-relaxed">{{ a.bio }}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
