@@ -62,9 +62,9 @@ export const projectsData = [
     title: 'LuxeCommerce Storefront',
     category: 'E-Commerce / Web',
     type: 'Web',
-    description: 'High-conversion headless e-commerce architecture designed for luxury brands with 3D product configuration.',
-    tags: ['Next.js', 'Three.js', 'Shopify API', 'Tailwind'],
-    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=luxury%20fashion%20ecommerce%20website%20dark%20mode%20minimalist%203d&image_size=landscape_16_9'
+    description: 'Immersive luxury e-commerce storefront for the AURAMAISON house — editorial hero, animated product grid, working cart with quick-add, and an adventure in motion design.',
+    tags: ['Nuxt 3', 'Vue 3', 'Tailwind CSS'],
+    imageUrl: '/projects/project-5/screenshot.png',
   },
   {
     folder: 'project-6',
