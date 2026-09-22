@@ -8,15 +8,23 @@ import {
 const IMG = '?q=80&w=2000&auto=format&fit=crop'
 
 const products = [
-  { id: 1, name: 'Obsidian Chronograph', price: 12450, tag: 'Limited', image: `https://images.unsplash.com/photo-1523275335684-37898b6baf30${IMG}` },
-  { id: 2, name: 'Noir Eau de Parfum', price: 450, tag: 'Icon', image: `https://images.unsplash.com/photo-1541643600914-78b084683601${IMG}` },
-  { id: 3, name: 'Leather Weekender', price: 3200, tag: '', image: `https://images.unsplash.com/photo-1553062407-98eeb64c6a62${IMG}` },
-  { id: 4, name: 'Monogram Silk Scarf', price: 680, tag: 'New', image: `https://images.unsplash.com/photo-1490481651871-ab68de25d43d${IMG}` },
-  { id: 5, name: 'Riviera Sunglasses', price: 520, tag: 'New', image: `https://images.unsplash.com/photo-1572635196237-14b3f281503f${IMG}` },
-  { id: 6, name: 'Midnight Stiletto', price: 1150, tag: '', image: `https://images.unsplash.com/photo-1543163521-1bf539c55dd2${IMG}` },
-  { id: 7, name: 'Heritage Loafer', price: 890, tag: '', image: `https://images.unsplash.com/photo-1560769629-975ec94e6a86${IMG}` },
-  { id: 8, name: 'Cascade Diamond Earrings', price: 8900, tag: 'Limited', image: `https://images.unsplash.com/photo-1611591437281-460bfbe1220a${IMG}` }
+  { id: 1, name: 'Obsidian Chronograph', price: 12450, tag: 'Limited', cat: 'Timepieces', image: `https://images.unsplash.com/photo-1523275335684-37898b6baf30${IMG}` },
+  { id: 2, name: 'Noir Eau de Parfum', price: 450, tag: 'Icon', cat: 'Fragrance', image: `https://images.unsplash.com/photo-1541643600914-78b084683601${IMG}` },
+  { id: 3, name: 'Leather Weekender', price: 3200, tag: '', cat: 'Leather', image: `https://images.unsplash.com/photo-1553062407-98eeb64c6a62${IMG}` },
+  { id: 4, name: 'Monogram Silk Scarf', price: 680, tag: 'New', cat: 'Ready-to-Wear', image: `https://images.unsplash.com/photo-1490481651871-ab68de25d43d${IMG}` },
+  { id: 5, name: 'Riviera Sunglasses', price: 520, tag: 'New', cat: 'Ready-to-Wear', image: `https://images.unsplash.com/photo-1572635196237-14b3f281503f${IMG}` },
+  { id: 6, name: 'Midnight Stiletto', price: 1150, tag: '', cat: 'Ready-to-Wear', image: `https://images.unsplash.com/photo-1543163521-1bf539c55dd2${IMG}` },
+  { id: 7, name: 'Heritage Loafer', price: 890, tag: '', cat: 'Leather', image: `https://images.unsplash.com/photo-1560769629-975ec94e6a86${IMG}` },
+  { id: 8, name: 'Cascade Diamond Earrings', price: 8900, tag: 'Limited', cat: 'Joaillerie', image: `https://images.unsplash.com/photo-1611591437281-460bfbe1220a${IMG}` }
 ]
+
+const categories = ['Timepieces', 'Fragrance', 'Leather', 'Joaillerie', 'Ready-to-Wear']
+
+const activeFilter = ref('All')
+const setFilter = (f) => { activeFilter.value = f }
+const filteredProducts = computed(() =>
+  activeFilter.value === 'All' ? products : products.filter(p => p.cat === activeFilter.value)
+)
 
 const featured = [products[0], products[7]]
 
@@ -344,16 +352,19 @@ onUnmounted(() => {
         <p class="text-amber-400 text-xs uppercase tracking-[0.35em] mb-3 font-bold">The Collection</p>
         <h2 class="text-4xl md:text-6xl font-light tracking-tight">Aurora <span class="font-bold">2026</span></h2>
         <div class="mt-6 flex flex-wrap gap-3">
-          <span class="px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] text-slate-300 border border-white/10 hover:border-amber-400 hover:text-amber-400 transition-colors cursor-pointer">All</span>
-          <span v-for="tag in ['Timepieces', 'Fragrance', 'Leather', 'Joaillerie', 'Ready-to-Wear']" :key="tag"
-                class="px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] text-slate-300 border border-white/10 hover:border-amber-400 hover:text-amber-400 transition-colors cursor-pointer">
+          <button @click="setFilter('All')"
+                  :class="['px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] border transition-colors cursor-pointer', activeFilter === 'All' ? 'border-amber-400 text-amber-400 bg-amber-400/10' : 'text-slate-300 border-white/10 hover:border-amber-400 hover:text-amber-400']">
+            All
+          </button>
+          <button v-for="tag in categories" :key="tag" @click="setFilter(tag)"
+                  :class="['px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] border transition-colors cursor-pointer', activeFilter === tag ? 'border-amber-400 text-amber-400 bg-amber-400/10' : 'text-slate-300 border-white/10 hover:border-amber-400 hover:text-amber-400']">
             {{ tag }}
-          </span>
+          </button>
         </div>
       </div>
 
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-        <article v-for="(product, i) in products" :key="product.id"
+        <article v-for="(product, i) in filteredProducts" :key="product.id"
                  class="group relative bg-white/[0.02] border border-white/[0.06] overflow-hidden reveal"
                  :style="{ transitionDelay: (i % 4) * 70 + 'ms' }">
           <div class="relative aspect-[3/4] overflow-hidden">

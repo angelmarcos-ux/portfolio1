@@ -26,9 +26,9 @@ export const projectsData = [
     title: 'QuantTrade Institutional Platform',
     category: 'Fintech / AI',
     type: 'Web',
-    description: 'A high-frequency trading dashboard integrating real-time market data, AI-driven sentiment analysis, and instant order execution.',
-    tags: ['Nuxt 3', 'Go', 'PyTorch', 'WebSockets'],
-    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=high%20end%20fintech%20trading%20dashboard%20ui%20dark%20mode%20web%20app&image_size=landscape_16_9'
+    description: 'Institutional crypto trading terminal with a live simulated order feed, Lightweight Charts candlesticks with volume, depth-10 order book, AI sentiment engine, and working paper trading (equity, positions, realized/unrealized P&L, execution feed).',
+    tags: ['React', 'TypeScript', 'Vite', 'Lightweight Charts'],
+    imageUrl: '/projects/project-1/screenshot.png'
   },
   {
     folder: 'project-2',

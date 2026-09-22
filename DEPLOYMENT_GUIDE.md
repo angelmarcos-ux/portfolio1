@@ -67,12 +67,12 @@ git push origin main
 
 ---
 
-## Step 7: Deploy Project 1 (Static HTML - QuantTrade)
-Because Project 1 is a pure HTML/JS file, it's currently inside `public/projects/project-1`. 
+## Step 7: Deploy Project 1 (Vite/React - QuantTrade)
+Project 1 is a real Vite + React + TypeScript app inside `apps/project-1`.
 1. Click **Add New -> Project**.
 2. Import the repository.
-3. Edit **Root Directory** -> Select `public/projects/project-1`.
-4. **Framework Preset:** Select `Other`.
+3. Edit **Root Directory** -> Select `apps/project-1`.
+4. **Framework Preset:** Vercel will detect `Vite` (build command `npm run build`, output `dist`).
 5. Click **Deploy**.
 
 ---
