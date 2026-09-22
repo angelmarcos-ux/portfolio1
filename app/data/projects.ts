@@ -65,6 +65,7 @@ export const projectsData = [
     description: 'Immersive luxury e-commerce storefront for the AURAMAISON house — editorial hero, animated product grid, working cart with quick-add, and an adventure in motion design.',
     tags: ['Nuxt 3', 'Vue 3', 'Tailwind CSS'],
     imageUrl: '/projects/project-5/screenshot.png',
+    liveUrl: 'https://project-5-kohl-iota.vercel.app/',
   },
   {
     folder: 'project-6',
