@@ -38,7 +38,8 @@ export const projectsData = [
     type: 'Mobile',
     description: 'Cross-platform mobile application using on-device ML to analyze sleep patterns and provide personalized health recommendations.',
     tags: ['React Native', 'TensorFlow Lite', 'Node.js'],
-    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=sleek%20modern%20health%20tracking%20mobile%20app%20ui%20dark%20theme&image_size=landscape_16_9'
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=sleek%20modern%20health%20tracking%20mobile%20app%20ui%20dark%20theme&image_size=landscape_16_9',
+    liveUrl: 'https://healthtracker-olive.vercel.app/'
   },
   {
     folder: 'project-3',
