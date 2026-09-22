@@ -38,7 +38,7 @@
           </h1>
           
           <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            I am a senior engineer bridging the gap between <span class="text-white font-medium">Fullstack Web</span>, 
+            I am a Fullstack Developer bridging the gap between <span class="text-white font-medium">Fullstack Web</span>, 
             <span class="text-white font-medium">Native Mobile</span>, and <span class="text-white font-medium">Machine Learning</span>. 
             Delivering scalable, high-performance systems for institutional-grade applications.
           </p>
