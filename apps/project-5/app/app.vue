@@ -393,8 +393,8 @@ onUnmounted(() => {
 
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
         <article v-for="(product, i) in filteredProducts" :key="product.id"
-                 class="group relative bg-white/[0.02] border border-white/[0.06] overflow-hidden reveal"
-                 :style="{ transitionDelay: (i % 4) * 70 + 'ms' }">
+                 class="group relative bg-white/[0.02] border border-white/[0.06] overflow-hidden card-in"
+                 :style="{ animationDelay: (i % 4) * 70 + 'ms' }">
           <div class="relative aspect-[3/4] overflow-hidden">
             <img :src="product.image" :alt="product.name" loading="lazy"
                  class="w-full h-full object-cover transition-transform duration-[1100ms] group-hover:scale-110" />
@@ -769,6 +769,10 @@ onUnmounted(() => {
 .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); will-change: opacity, transform; }
 .reveal.is-visible { opacity: 1; transform: none; }
 
+/* ---------- collection card entrance (self-running, no IO dependency) ---------- */
+.card-in { animation: cardIn 0.9s cubic-bezier(0.16,1,0.3,1) both; will-change: opacity, transform; }
+@keyframes cardIn { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: none; } }
+
 /* ---------- card hover lift ---------- */
 .card-focus { transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s ease; }
 .card-focus:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -20px rgba(0,0,0,0.7); }
@@ -799,7 +803,7 @@ onUnmounted(() => {
 .toast-leave-to { opacity: 0; transform: translate(-50%, 12px); }
 
 @media (prefers-reduced-motion: reduce) {
-  .kenburns, .animate-shimmer, .marquee-track, .particle, .hero-item { animation: none; opacity: 1; }
+  .kenburns, .animate-shimmer, .marquee-track, .particle, .hero-item, .card-in { animation: none; opacity: 1; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 </style>
