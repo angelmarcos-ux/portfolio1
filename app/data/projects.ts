@@ -1,0 +1,249 @@
+export const projectsData = [
+  {
+    folder: 'medicare',
+    title: 'Medicare Portal',
+    category: 'Healthcare / Web',
+    type: 'Web',
+    description: 'HIPAA-Compliant Secure Healthcare Management System featuring end-to-end encryption and MFA.',
+    tags: ['React', 'TypeScript', 'Tailwind CSS'],
+    imageUrl: '/projects/medicare/screenshot.png',
+    liveUrl: 'https://medicare-azure-one.vercel.app/',
+    githubUrl: 'https://github.com/angelmarcos-ux/medicare-'
+  },
+  {
+    folder: '3d-print-hub',
+    title: '3D Print Hub',
+    category: 'Marketplace / Web',
+    type: 'Web',
+    description: 'Connect with local 3D Printer Owners. Upload models and get designs printed with real-time monitoring and QA.',
+    tags: ['TypeScript', 'React', 'Supabase'],
+    imageUrl: '/projects/3d-print-hub/screenshot.png',
+    liveUrl: 'https://3-d-print-hub-brown.vercel.app/',
+    githubUrl: 'https://github.com/angelmarcos-ux/3D-Print-Hub'
+  },
+  {
+    folder: 'project-1',
+    title: 'QuantTrade Institutional Platform',
+    category: 'Fintech / AI',
+    type: 'Web',
+    description: 'A high-frequency trading dashboard integrating real-time market data, AI-driven sentiment analysis, and instant order execution.',
+    tags: ['Nuxt 3', 'Go', 'PyTorch', 'WebSockets'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=high%20end%20fintech%20trading%20dashboard%20ui%20dark%20mode%20web%20app&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-2',
+    title: 'Aura AI Health Tracker',
+    category: 'Mobile / Health',
+    type: 'Mobile',
+    description: 'Cross-platform mobile application using on-device ML to analyze sleep patterns and provide personalized health recommendations.',
+    tags: ['React Native', 'TensorFlow Lite', 'Node.js'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=sleek%20modern%20health%20tracking%20mobile%20app%20ui%20dark%20theme&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-3',
+    title: 'Nexus Logistics AI',
+    category: 'Logistics / ML',
+    type: 'Machine Learning',
+    description: 'Global supply chain optimization engine utilizing deep learning to predict route inefficiencies and reduce shipping costs.',
+    tags: ['Python', 'FastAPI', 'React', 'PostgreSQL'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=global%20logistics%20supply%20chain%20ai%20dashboard%20dark%20mode%20data%20visualization&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-4',
+    title: 'AutoVision Autonomous Edge',
+    category: 'Automotive / Edge AI',
+    type: 'Machine Learning',
+    description: 'Edge-deployed computer vision model for real-time object detection and lane tracking in smart vehicles.',
+    tags: ['C++', 'Rust', 'TensorRT', 'OpenCV'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=autonomous%20driving%20computer%20vision%20object%20detection%20hud%20dark%20ui&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-5',
+    title: 'LuxeCommerce Storefront',
+    category: 'E-Commerce / Web',
+    type: 'Web',
+    description: 'High-conversion headless e-commerce architecture designed for luxury brands with 3D product configuration.',
+    tags: ['Next.js', 'Three.js', 'Shopify API', 'Tailwind'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=luxury%20fashion%20ecommerce%20website%20dark%20mode%20minimalist%203d&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-6',
+    title: 'SecurEdge Identity',
+    category: 'Cybersecurity / Fullstack',
+    type: 'Web',
+    description: 'Zero-trust identity access management system featuring biometric authentication and behavioral anomaly detection.',
+    tags: ['Go', 'Vue 3', 'WebAuthn', 'Redis'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=cybersecurity%20identity%20management%20dashboard%20dark%20neon%20tech&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-7',
+    title: 'MediVision Radiology',
+    category: 'Healthcare / ML',
+    type: 'Machine Learning',
+    description: 'Automated tumor detection pipeline utilizing state-of-the-art segmentation networks on high-res MRI scans.',
+    tags: ['PyTorch', 'MONAI', 'FastAPI', 'Docker'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=medical%20radiology%20mri%20scan%20ai%20analysis%20dashboard%20dark%20mode&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-8',
+    title: 'SmartCity Grid IoT',
+    category: 'IoT / Mobile',
+    type: 'Mobile',
+    description: 'Real-time dashboard and mobile controller for municipal power grids, integrating millions of IoT sensor endpoints.',
+    tags: ['Flutter', 'Dart', 'AWS IoT', 'GraphQL'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=smart%20city%20iot%20energy%20grid%20mobile%20app%20ui%20dark%20mode&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-9',
+    title: 'ChainVault Custody',
+    category: 'Web3 / Security',
+    type: 'Web',
+    description: 'Multi-signature institutional wallet architecture for secure storage of digital assets and smart contract execution.',
+    tags: ['Solidity', 'Rust', 'Next.js', 'Ethers.js'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=web3%20crypto%20institutional%20wallet%20dashboard%20dark%20mode%20secure&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-10',
+    title: 'AeroPredict Maintenance',
+    category: 'Aviation / AI',
+    type: 'Machine Learning',
+    description: 'Predictive maintenance algorithm for commercial jet engines, minimizing AOG (Aircraft On Ground) time.',
+    tags: ['Python', 'XGBoost', 'Apache Spark', 'Vue 3'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=aviation%20jet%20engine%20predictive%20maintenance%20ai%20dashboard%20dark%20theme&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-11',
+    title: 'OmniStream Media',
+    category: 'Media / Web',
+    type: 'Web',
+    description: 'Ultra-low latency live streaming platform utilizing WebRTC and edge-distributed transcoding nodes.',
+    tags: ['Node.js', 'WebRTC', 'React', 'FFmpeg'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=live%20streaming%20media%20platform%20dashboard%20dark%20mode%20neon&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-12',
+    title: 'FinLend Microfinance',
+    category: 'Fintech / Mobile',
+    type: 'Mobile',
+    description: 'Mobile-first peer-to-peer lending platform with AI-driven credit scoring for unbanked demographics.',
+    tags: ['Kotlin', 'Android Native', 'Spring Boot', 'PostgreSQL'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=mobile%20banking%20finance%20app%20ui%20clean%20dark%20mode&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-13',
+    title: 'BioGen Sequence',
+    category: 'Biotech / ML',
+    type: 'Machine Learning',
+    description: 'Cloud-based DNA sequencing analysis tool that leverages transformer models for rapid protein folding prediction.',
+    tags: ['HuggingFace', 'React', 'FastAPI', 'AWS Batch'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=biotech%20dna%20sequencing%20protein%20folding%20ai%20interface%20dark&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-14',
+    title: 'EduVerse XR',
+    category: 'EdTech / AR',
+    type: 'Mobile',
+    description: 'Augmented reality educational platform rendering interactive historical events on mobile devices.',
+    tags: ['Swift', 'ARKit', 'Unity', 'Node.js'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=augmented%20reality%20education%20mobile%20app%20ui%20futuristic&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-15',
+    title: 'AgriSmart Drone Ops',
+    category: 'Agriculture / Edge AI',
+    type: 'Machine Learning',
+    description: 'Automated drone fleet management system for precision agriculture, crop health monitoring, and targeted spraying.',
+    tags: ['C++', 'React', 'Go', 'YOLOv8'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=agriculture%20drone%20fleet%20management%20ai%20dashboard%20dark%20mode&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-16',
+    title: 'PropTech Valuator',
+    category: 'Real Estate / ML',
+    type: 'Web',
+    description: 'Automated valuation model (AVM) for commercial real estate utilizing geospatial data and market sentiment.',
+    tags: ['Python', 'Django', 'Nuxt 3', 'PostGIS'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=real%20estate%20commercial%20property%20map%20dashboard%20dark%20mode&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-17',
+    title: 'RetailOps Dashboard',
+    category: 'Retail / Web',
+    type: 'Web',
+    description: 'Unified inventory and warehouse management system syncing physical stores with global online channels.',
+    tags: ['SvelteKit', 'NestJS', 'GraphQL', 'Prisma'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=retail%20warehouse%20inventory%20management%20dashboard%20dark%20theme&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-18',
+    title: 'CloudScale Automator',
+    category: 'DevOps / Fullstack',
+    type: 'Web',
+    description: 'Infrastructure-as-code visualization tool that automatically generates Terraform scripts from drag-and-drop UI architectures.',
+    tags: ['Vue 3', 'Go', 'Terraform', 'Docker'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=cloud%20infrastructure%20architecture%20node%20graph%20ui%20dark%20mode&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-19',
+    title: 'NeuralHR Talent Matching',
+    category: 'HR / AI',
+    type: 'Machine Learning',
+    description: 'Semantic search engine matching candidate resumes with job requirements utilizing custom vector embeddings.',
+    tags: ['Next.js', 'Pinecone', 'OpenAI API', 'Node.js'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=hr%20talent%20matching%20ai%20network%20dashboard%20dark%20mode&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-20',
+    title: 'QuantumCrypto Analytics',
+    category: 'Security / Web',
+    type: 'Web',
+    description: 'Real-time cryptography analytics platform mapping post-quantum vulnerability exposures in enterprise networks.',
+    tags: ['Rust', 'WASM', 'React', 'ClickHouse'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=cryptography%20cybersecurity%20analytics%20dashboard%20dark%20neon&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-21',
+    title: 'LegalTech Connect',
+    category: 'Law / Mobile',
+    type: 'Mobile',
+    description: 'Secure, end-to-end encrypted messaging and document sharing app for legal professionals and clients.',
+    tags: ['React Native', 'Signal Protocol', 'Node.js'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=secure%20encrypted%20messaging%20mobile%20app%20ui%20dark%20mode&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-22',
+    title: 'ManuTrack MES',
+    category: 'Manufacturing / Web',
+    type: 'Web',
+    description: 'Manufacturing execution system tracking factory floor metrics, OEE, and machine downtime in real-time.',
+    tags: ['Angular', 'C#', '.NET Core', 'SQL Server'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=manufacturing%20factory%20metrics%20dashboard%20dark%20theme&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-23',
+    title: 'DeepSpace Trajectory',
+    category: 'Space / ML',
+    type: 'Machine Learning',
+    description: 'Orbital mechanics simulation tool leveraging deep reinforcement learning for optimal satellite trajectory plotting.',
+    tags: ['Python', 'JAX', 'React Three Fiber', 'FastAPI'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=space%20satellite%20orbital%20mechanics%203d%20simulation%20ui%20dark&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-24',
+    title: 'EcoEnergy Optimizer',
+    category: 'Energy / Mobile',
+    type: 'Mobile',
+    description: 'Consumer app for tracking household energy consumption and controlling smart home HVAC systems for efficiency.',
+    tags: ['SwiftUI', 'Firebase', 'Python', 'IoT'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=smart%20home%20energy%20optimizer%20mobile%20app%20dark%20mode%20ui&image_size=landscape_16_9'
+  },
+  {
+    folder: 'project-25',
+    title: 'HorizonXR Collaborative',
+    category: 'AR/VR / Fullstack',
+    type: 'Web',
+    description: 'Spatial computing workspace enabling remote engineering teams to collaborate on 3D CAD models simultaneously.',
+    tags: ['WebXR', 'Three.js', 'Go', 'WebSockets'],
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=spatial%20computing%20vr%20cad%20collaboration%20dashboard%20dark%20mode&image_size=landscape_16_9'
+  }
+];

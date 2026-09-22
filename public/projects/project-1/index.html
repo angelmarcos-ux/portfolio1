@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantTrade Institutional Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0a0a0a',
+                        card: '#111111',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body class="bg-dark text-slate-300 font-sans h-screen overflow-hidden flex flex-col">
+    <!-- Topbar -->
+    <header class="h-14 border-b border-white/10 flex items-center justify-between px-6 bg-card">
+        <div class="flex items-center gap-4">
+            <i data-lucide="bar-chart-2" class="text-blue-500"></i>
+            <span class="font-bold text-white tracking-wider">QUANT<span class="text-blue-500">TRADE</span></span>
+        </div>
+        <div class="flex items-center gap-6 text-sm">
+            <span class="text-emerald-400 flex items-center gap-2"><i data-lucide="activity" class="w-4 h-4"></i> System Status: Operational</span>
+            <div class="w-8 h-8 rounded-full bg-blue-900/50 flex items-center justify-center border border-blue-500/30">
+                <i data-lucide="user" class="w-4 h-4 text-blue-400"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 flex gap-4 p-4 overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-64 flex flex-col gap-4">
+            <div class="bg-card border border-white/5 rounded-xl p-4 flex-1">
+                <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">AI Sentiment</h3>
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between text-sm mb-1"><span>BTC/USD</span> <span class="text-emerald-400">Bullish 84%</span></div>
+                        <div class="w-full bg-white/5 rounded-full h-2"><div class="bg-emerald-500 h-2 rounded-full" style="width: 84%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-1"><span>ETH/USD</span> <span class="text-emerald-400">Bullish 72%</span></div>
+                        <div class="w-full bg-white/5 rounded-full h-2"><div class="bg-emerald-500 h-2 rounded-full" style="width: 72%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-1"><span>SOL/USD</span> <span class="text-red-400">Bearish 61%</span></div>
+                        <div class="w-full bg-white/5 rounded-full h-2 flex justify-end"><div class="bg-red-500 h-2 rounded-full" style="width: 61%"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-card border border-white/5 rounded-xl p-4 h-64">
+                <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Quick Execution</h3>
+                <div class="space-y-3">
+                    <input type="text" value="BTC/USD" class="w-full bg-black border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500">
+                    <div class="flex gap-2">
+                        <input type="text" placeholder="Amount" class="w-full bg-black border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none">
+                        <select class="bg-black border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none">
+                            <option>Limit</option>
+                            <option>Market</option>
+                        </select>
+                    </div>
+                    <div class="flex gap-2 pt-2">
+                        <button class="flex-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/50 py-2 rounded-lg font-bold hover:bg-emerald-500/30 transition">BUY</button>
+                        <button class="flex-1 bg-red-500/20 text-red-400 border border-red-500/50 py-2 rounded-lg font-bold hover:bg-red-500/30 transition">SELL</button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Chart Area -->
+        <section class="flex-1 bg-card border border-white/5 rounded-xl p-4 flex flex-col relative overflow-hidden">
+            <div class="flex justify-between items-center mb-4 z-10 relative">
+                <div class="flex items-center gap-4">
+                    <h2 class="text-2xl font-bold text-white">BTC / USD</h2>
+                    <span id="live-pct" class="text-xl text-emerald-400">+2.45%</span>
+                    <span id="live-price" class="text-2xl text-white font-mono">$64,230.50</span>
+                </div>
+                <div class="flex gap-2">
+                    <button class="px-3 py-1 bg-white/10 rounded text-sm hover:bg-white/20">1H</button>
+                    <button class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded text-sm border border-blue-500/30">4H</button>
+                    <button class="px-3 py-1 bg-white/10 rounded text-sm hover:bg-white/20">1D</button>
+                </div>
+            </div>
+            
+            <!-- Actual WebGL Candlestick Chart -->
+            <div id="tvchart" class="flex-1 w-full h-full relative z-10"></div>
+
+            <script>
+                // Initialize Lightweight Charts
+                const chart = LightweightCharts.createChart(document.getElementById('tvchart'), {
+                    layout: { background: { type: 'solid', color: 'transparent' }, textColor: '#cbd5e1' },
+                    grid: { vertLines: { color: 'rgba(255,255,255,0.05)' }, horzLines: { color: 'rgba(255,255,255,0.05)' } },
+                    crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+                    rightPriceScale: { borderColor: 'rgba(255,255,255,0.1)' },
+                    timeScale: { borderColor: 'rgba(255,255,255,0.1)' },
+                });
+                
+                const candlestickSeries = chart.addCandlestickSeries({
+                    upColor: '#10b981', downColor: '#ef4444', borderVisible: false, wickUpColor: '#10b981', wickDownColor: '#ef4444'
+                });
+
+                // Generate Historical Data
+                let currentPrice = 64230.50;
+                let currentTime = Math.floor(Date.now() / 1000) - 86400; // 1 day ago
+                const data = [];
+                
+                for(let i = 0; i < 150; i++) {
+                    const open = currentPrice;
+                    const close = open + (Math.random() - 0.5) * 200;
+                    const high = Math.max(open, close) + Math.random() * 100;
+                    const low = Math.min(open, close) - Math.random() * 100;
+                    data.push({ time: currentTime, open, high, low, close });
+                    currentPrice = close;
+                    currentTime += 600; // 10 min intervals
+                }
+                candlestickSeries.setData(data);
+
+                // Simulate Real-time WebSocket Feed
+                setInterval(() => {
+                    const lastBar = data[data.length - 1];
+                    const open = lastBar.close;
+                    const close = open + (Math.random() - 0.5) * 50;
+                    const high = Math.max(open, close) + Math.random() * 20;
+                    const low = Math.min(open, close) - Math.random() * 20;
+                    
+                    const newBar = { time: currentTime + 600, open, high, low, close };
+                    data.push(newBar);
+                    candlestickSeries.update(newBar);
+                    currentTime += 600;
+
+                    // Update UI Ticker
+                    document.getElementById('live-price').innerText = '$' + close.toFixed(2);
+                    const isUp = close >= open;
+                    document.getElementById('live-pct').innerText = (isUp ? '+' : '') + ((close-64230.50)/64230.50 * 100).toFixed(2) + '%';
+                    document.getElementById('live-pct').className = 'text-xl ' + (isUp ? 'text-emerald-400' : 'text-red-400');
+                }, 1000);
+            </script>
+        </section>
+
+        <!-- Order Book -->
+        <aside class="w-72 bg-card border border-white/5 rounded-xl p-4 flex flex-col">
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 flex justify-between">
+                <span>Order Book</span>
+                <i data-lucide="list" class="w-4 h-4"></i>
+            </h3>
+            <div class="flex-1 flex flex-col font-mono text-sm">
+                <div class="flex justify-between text-slate-500 mb-2 pb-2 border-b border-white/10">
+                    <span>Price</span><span>Size</span><span>Total</span>
+                </div>
+                <!-- Asks -->
+                <div class="flex-1 flex flex-col-reverse gap-1 text-red-400 opacity-80">
+                    <script>
+                        let price = 64250.00;
+                        for(let i=0; i<15; i++) {
+                            price -= Math.random() * 2;
+                            const size = (Math.random() * 2).toFixed(4);
+                            document.write(`<div class="flex justify-between relative group cursor-pointer hover:bg-white/5"><div class="absolute right-0 top-0 bottom-0 bg-red-500/10" style="width: ${Math.random()*100}%"></div><span class="z-10">${price.toFixed(1)}</span><span class="text-slate-300 z-10">${size}</span></div>`);
+                        }
+                    </script>
+                </div>
+                <!-- Spread -->
+                <div class="py-2 my-2 border-y border-white/10 text-center text-white text-lg bg-white/5">
+                    $64,230.50 <span class="text-xs text-slate-500 ml-2">Spread: 0.50</span>
+                </div>
+                <!-- Bids -->
+                <div class="flex-1 flex flex-col gap-1 text-emerald-400 opacity-80">
+                    <script>
+                        price = 64230.00;
+                        for(let i=0; i<15; i++) {
+                            price -= Math.random() * 2;
+                            const size = (Math.random() * 2).toFixed(4);
+                            document.write(`<div class="flex justify-between relative group cursor-pointer hover:bg-white/5"><div class="absolute right-0 top-0 bottom-0 bg-emerald-500/10" style="width: ${Math.random()*100}%"></div><span class="z-10">${price.toFixed(1)}</span><span class="text-slate-300 z-10">${size}</span></div>`);
+                        }
+                    </script>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
