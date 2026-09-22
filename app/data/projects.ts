@@ -28,7 +28,8 @@ export const projectsData = [
     type: 'Web',
     description: 'Institutional crypto trading terminal with a live simulated order feed, Lightweight Charts candlesticks with volume, depth-10 order book, AI sentiment engine, and working paper trading (equity, positions, realized/unrealized P&L, execution feed).',
     tags: ['React', 'TypeScript', 'Vite', 'Lightweight Charts'],
-    imageUrl: '/projects/project-1/screenshot.png'
+    imageUrl: '/projects/project-1/screenshot.png',
+    liveUrl: 'https://project-1-olive-eight-24.vercel.app/'
   },
   {
     folder: 'project-2',
