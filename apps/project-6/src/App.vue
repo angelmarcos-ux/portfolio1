@@ -2,7 +2,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import {
   Shield, ShieldAlert, Fingerprint, Brain, Activity,
-  AlertTriangle, Laptop, Smartphone, Globe, KeyRound, Users, ScanFace,
+  AlertTriangle, Laptop, Smartphone, Globe, KeyRound, Users,
   ArrowRight, Server, Ban, CheckCircle2, Lock, RefreshCw, Radar, Clock,
 } from 'lucide-vue-next'
 
@@ -17,31 +17,108 @@ const anomalies = ref([
   { id: 4, level: 'med', title: 'New Device Enrollment', time: '14m ago', desc: 'Unseen Windows 11 surface from Jakarta requested a session. Passkey ceremony completed; trust tier set to Low.' },
 ])
 
-const sessions = [
+const sessions = ref([
   { id: 1, device: 'Windows 11 · Chrome', location: 'Singapore', ip: '103.75.42.18', risk: 12, verified: true, type: 'laptop' },
   { id: 2, device: 'iPhone 15 Pro', location: 'Singapore', ip: '103.75.42.22', risk: 24, verified: true, type: 'smartphone' },
   { id: 3, device: 'Linux Workstation', location: 'Jakarta, ID', ip: '36.89.120.7', risk: 58, verified: false, type: 'server' },
   { id: 4, device: 'macOS · Safari (Unknown)', location: 'Frankfurt, DE', ip: '45.132.65.201', risk: 91, verified: false, type: 'laptop' },
-]
+])
 
 const blockedSessions = ref(new Set<number>())
 
-const users = [
+const users = ref([
   { name: 'Maria Vasquez', role: 'Admin · Identity', mfa: 'Passkey + FIDO2', risk: 'Low', ok: true },
   { name: 'Kenji Lim', role: 'SRE · Payments', mfa: 'TOTP', risk: 'Med', ok: true },
   { name: 'Ayesha Rahman', role: 'Support · L1', mfa: 'SMS Fallback', risk: 'Med', ok: false },
   { name: 'Jonas Weber', role: 'Auditor', mfa: 'Passkey', risk: 'Low', ok: true },
-]
+])
 
-const policies = [
+const policies = ref([
   { name: 'MFA Mandatory', tier: 'P0 · Never trust', status: 'Enforced', on: true },
   { name: 'Session Risk Cap', tier: 'P1 · 8h rotate', status: 'Enforced', on: true },
   { name: 'Geofence: EU Data', tier: 'P1 · Region pin', status: 'Advisory', on: false },
   { name: 'Privilege Escalation', tier: 'P0 · Approver', status: 'Enforced', on: true },
-]
+])
 
 const authRange = ref('24h')
 const authBars = ref([38, 42, 35, 60, 78, 55, 47, 52, 90, 120, 105, 88, 96, 132, 118, 140, 168, 155, 128, 96, 74, 58, 46, 40])
+
+const chartBars = computed(() => {
+  if (authRange.value === '6h') return authBars.value.slice(0, 12)
+  if (authRange.value === '7d') return [1180, 1340, 1050, 1490, 1270, 1120, 1380]
+  return authBars.value
+})
+
+const scanning = ref(false)
+const reEvaluating = ref(false)
+const showPolicyDialog = ref(false)
+const newPolicyName = ref('')
+const newPolicyTier = ref('P2 · Standard')
+const toasts = ref<{ id: number; msg: string; type: 'ok' | 'warn' | 'err' }[]>([])
+let toastId = 0
+
+const pushToast = (msg: string, type: 'ok' | 'warn' | 'err' = 'ok') => {
+  const id = ++toastId
+  toasts.value.push({ id, msg, type })
+  setTimeout(() => {
+    toasts.value = toasts.value.filter(t => t.id !== id)
+  }, 4200)
+}
+
+const runScan = () => {
+  if (scanning.value) return
+  scanning.value = true
+  setTimeout(() => {
+    scanning.value = false
+    trustScore.value = Math.min(99, trustScore.value + Math.round(Math.random() * 3))
+    pushToast('Identity scan complete — 1,284 sessions evaluated.', 'ok')
+    if (Math.random() > 0.5) {
+      anomalies.value.unshift({
+        id: Date.now(),
+        level: 'high',
+        title: 'Scan Found Shadow Admin',
+        time: 'Just now',
+        desc: 'A dormant privileged account with no MFA was detected. Automatic remediation applied.'
+      })
+    }
+  }, 2400)
+}
+
+const quarantineAnomaly = (id: number) => {
+  anomalies.value = anomalies.value.filter(a => a.id !== id)
+  blockedAttempts.value += 1
+  pushToast('Identity quarantined and session revoked.', 'err')
+}
+
+const addPolicy = () => {
+  const name = newPolicyName.value.trim()
+  if (!name) return
+  policies.value.push({ name, tier: newPolicyTier.value, status: 'Enforced', on: true })
+  newPolicyName.value = ''
+  newPolicyTier.value = 'P2 · Standard'
+  showPolicyDialog.value = false
+  pushToast(`Policy "${name}" enforced.`, 'ok')
+}
+
+const reEvaluate = () => {
+  if (reEvaluating.value) return
+  reEvaluating.value = true
+  setTimeout(() => {
+    reEvaluating.value = false
+    users.value = users.value.map(u => ({
+      ...u,
+      risk: Math.random() > 0.25 ? 'Low' : 'Med',
+      ok: Math.random() > 0.2,
+    }))
+    sessions.value = sessions.value.map(s => ({
+      ...s,
+      risk: Math.max(5, Math.min(99, s.risk + Math.round(Math.random() * 20) - 10)),
+      verified: Math.random() > 0.15,
+    }))
+    trustScore.value = Math.max(55, Math.min(98, trustScore.value + Math.round(Math.random() * 8) - 4))
+    pushToast('Identities re-evaluated — trust score updated.', 'ok')
+  }, 1400)
+}
 
 let interval: ReturnType<typeof setInterval>
 
@@ -104,7 +181,7 @@ const trustColor = computed(() =>
   trustScore.value >= 85 ? 'text-emerald-400' : trustScore.value >= 60 ? 'text-amber-400' : 'text-red-400'
 )
 
-const maxBar = computed(() => Math.max(...authBars.value))
+const maxBar = computed(() => Math.max(...chartBars.value))
 
 const deviceIcon = (type: string) => type === 'smartphone' ? Smartphone : type === 'server' ? Server : Laptop
 </script>
@@ -143,8 +220,12 @@ const deviceIcon = (type: string) => type === 'smartphone' ? Smartphone : type =
           <span class="text-slate-400">{{ activeSessions.toLocaleString() }} sessions</span>
         </div>
         <div class="h-8 w-px bg-white/10"></div>
-        <button class="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white text-sm font-semibold rounded-lg transition flex items-center gap-2 shadow-[0_0_20px_rgba(16,185,129,0.35)]">
-          <ScanFace class="w-4 h-4" /> Run Identity Scan
+        <button
+          @click="runScan"
+          :disabled="scanning"
+          class="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 disabled:opacity-60 disabled:cursor-wait text-white text-sm font-semibold rounded-lg transition flex items-center gap-2 shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+        >
+          <RefreshCw :class="['w-4 h-4', scanning ? 'animate-spin' : '']" /> {{ scanning ? 'Scanning...' : 'Run Identity Scan' }}
         </button>
       </div>
     </header>
@@ -229,7 +310,10 @@ const deviceIcon = (type: string) => type === 'smartphone' ? Smartphone : type =
               <p class="text-[11px] text-slate-500">{{ p.tier }}</p>
             </div>
           </div>
-          <button class="mt-4 w-full py-2.5 border border-white/10 hover:border-emerald-500/50 text-emerald-300 text-xs font-semibold rounded-xl transition bg-emerald-500/5 hover:bg-emerald-500/10">
+          <button
+            @click="showPolicyDialog = true"
+            class="mt-4 w-full py-2.5 border border-white/10 hover:border-emerald-500/50 text-emerald-300 text-xs font-semibold rounded-xl transition bg-emerald-500/5 hover:bg-emerald-500/10"
+          >
             + New Policy
           </button>
         </div>
@@ -310,7 +394,10 @@ const deviceIcon = (type: string) => type === 'smartphone' ? Smartphone : type =
                 </div>
                 <p class="text-sm text-slate-200 pl-2 leading-relaxed">{{ a.desc }}</p>
                 <div v-if="a.level === 'high'" class="mt-2.5 pl-2">
-                  <button class="text-xs text-red-300 font-semibold flex items-center gap-1.5 hover:text-red-200 bg-red-500/15 border border-red-500/25 rounded-full px-3 py-1.5 transition">
+                  <button
+                    @click.stop="quarantineAnomaly(a.id)"
+                    class="text-xs text-red-300 font-semibold flex items-center gap-1.5 hover:text-red-200 bg-red-500/15 border border-red-500/25 rounded-full px-3 py-1.5 transition"
+                  >
                     Quarantine Identity <ArrowRight class="w-3 h-3" />
                   </button>
                 </div>
@@ -338,10 +425,10 @@ const deviceIcon = (type: string) => type === 'smartphone' ? Smartphone : type =
           </div>
           <div class="flex items-end gap-1 h-[120px]">
             <div
-              v-for="(v, i) in authBars"
+              v-for="(v, i) in chartBars"
               :key="i"
               class="flex-1 rounded-t-sm transition-all duration-300 cursor-pointer relative group"
-              :style="{ height: `${(v / maxBar) * 100}%`, background: i === authBars.length - 1 ? 'linear-gradient(180deg,#34d399,#0d9488)' : 'linear-gradient(180deg,rgba(52,211,153,0.5),rgba(20,184,166,0.18))' }"
+              :style="{ height: `${(v / maxBar) * 100}%`, background: i === chartBars.length - 1 ? 'linear-gradient(180deg,#34d399,#0d9488)' : 'linear-gradient(180deg,rgba(52,211,153,0.5),rgba(20,184,166,0.18))' }"
             >
               <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-black/90 backdrop-blur text-xs px-2.5 py-1 rounded-lg border border-white/10 opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none transition-opacity shadow-xl">
                 {{ v }} logins
@@ -422,12 +509,79 @@ const deviceIcon = (type: string) => type === 'smartphone' ? Smartphone : type =
               </div>
             </div>
           </div>
-          <button class="mt-4 w-full py-2.5 border border-white/10 hover:border-emerald-500/50 text-emerald-300 text-xs font-semibold rounded-xl transition bg-emerald-500/5 hover:bg-emerald-500/10 flex items-center justify-center gap-2">
-            <RefreshCw class="w-3.5 h-3.5" /> Re-Evaluate All
+          <button
+            @click="reEvaluate"
+            :disabled="reEvaluating"
+            class="mt-4 w-full py-2.5 border border-white/10 hover:border-emerald-500/50 text-emerald-300 text-xs font-semibold rounded-xl transition bg-emerald-500/5 hover:bg-emerald-500/10 flex items-center justify-center gap-2 disabled:opacity-60"
+          >
+            <RefreshCw :class="['w-3.5 h-3.5', reEvaluating ? 'animate-spin' : '']" /> {{ reEvaluating ? 'Re-evaluating...' : 'Re-Evaluate All' }}
           </button>
         </div>
       </aside>
     </main>
+
+    <!-- Toasts -->
+    <div class="fixed top-20 right-5 z-50 flex flex-col gap-2 w-80">
+      <TransitionGroup name="toast">
+        <div
+          v-for="t in toasts"
+          :key="t.id"
+          :class="[
+            'backdrop-blur border rounded-xl px-4 py-3 text-sm shadow-2xl flex items-start gap-2.5',
+            t.type === 'ok' ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-100'
+              : t.type === 'warn' ? 'bg-amber-500/15 border-amber-500/30 text-amber-100'
+              : 'bg-red-500/15 border-red-500/30 text-red-100'
+          ]"
+        >
+          <CheckCircle2 v-if="t.type === 'ok'" class="w-4 h-4 mt-0.5 shrink-0" />
+          <AlertTriangle v-else-if="t.type === 'warn'" class="w-4 h-4 mt-0.5 shrink-0" />
+          <Ban v-else class="w-4 h-4 mt-0.5 shrink-0" />
+          <span>{{ t.msg }}</span>
+        </div>
+      </TransitionGroup>
+    </div>
+
+    <!-- New Policy Dialog -->
+    <div
+      v-if="showPolicyDialog"
+      class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+      @click.self="showPolicyDialog = false"
+    >
+      <div class="w-full max-w-md bg-[#0d0d0d] border border-white/10 rounded-2xl p-6 shadow-2xl">
+        <h3 class="text-lg font-bold text-white mb-1 flex items-center gap-2">
+          <Lock class="w-5 h-5 text-emerald-400" /> Create Access Policy
+        </h3>
+        <p class="text-sm text-slate-500 mb-5">Policies define when access must be challenged or denied.</p>
+        <label class="block text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1.5">Policy name</label>
+        <input
+          v-model="newPolicyName"
+          type="text"
+          placeholder="e.g. SSH Lockdown"
+          class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-emerald-500/50 mb-4"
+          @keyup.enter="addPolicy"
+        />
+        <label class="block text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1.5">Trust tier</label>
+        <div class="flex gap-2 mb-6">
+          <button
+            v-for="tier in ['P0 · Critical', 'P1 · Strict', 'P2 · Standard']"
+            :key="tier"
+            @click="newPolicyTier = tier"
+            :class="['px-3 py-2 rounded-lg text-xs font-semibold border transition', newPolicyTier === tier ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300' : 'bg-white/5 border-white/10 text-slate-400 hover:text-white']"
+          >{{ tier }}</button>
+        </div>
+        <div class="flex gap-3">
+          <button
+            @click="showPolicyDialog = false"
+            class="flex-1 py-2.5 border border-white/10 text-slate-300 text-sm font-semibold rounded-xl hover:bg-white/5 transition"
+          >Cancel</button>
+          <button
+            @click="addPolicy"
+            :disabled="!newPolicyName.trim()"
+            class="flex-1 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 disabled:opacity-50 text-white text-sm font-semibold rounded-xl transition"
+          >Create Policy</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -443,6 +597,19 @@ const deviceIcon = (type: string) => type === 'smartphone' ? Smartphone : type =
 .list-leave-to {
   opacity: 0;
   transform: translateX(30px);
+}
+
+.toast-enter-active,
+.toast-leave-active {
+  transition: all 0.4s ease;
+}
+.toast-enter-from {
+  opacity: 0;
+  transform: translateX(40px);
+}
+.toast-leave-to {
+  opacity: 0;
+  transform: translateY(-12px) scale(0.95);
 }
 
 .bg-grid {
