@@ -13,6 +13,10 @@ node_modules
 logs
 *.log
 
+# vue-tsc emit artifacts emitted alongside .ts/.vue source
+apps/*/src/**/*.js
+apps/*/src/**/*.js.map
+
 # Misc
 .DS_Store
 .fleet
