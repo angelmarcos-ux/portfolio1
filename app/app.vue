@@ -164,7 +164,7 @@
                 <div class="absolute bottom-4 left-4 z-10">
                   <div class="px-3 py-1 bg-black/60 backdrop-blur-md rounded-md border border-white/10 flex items-center gap-2">
                     <Folder class="w-3 h-3 text-slate-300" />
-                    <span class="font-mono text-[10px] text-slate-300 font-semibold tracking-wider">/public/projects/{{ project.folder }}</span>
+                    <span class="font-mono text-[10px] text-slate-300 font-semibold tracking-wider">{{ project.folder }}</span>
                   </div>
                 </div>
               </div>
