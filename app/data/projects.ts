@@ -1,16 +1,5 @@
 export const projectsData = [
   {
-    folder: 'medicare',
-    title: 'Medicare Portal',
-    category: 'Healthcare / Web',
-    type: 'Web',
-    description: 'HIPAA-Compliant Secure Healthcare Management System featuring end-to-end encryption and MFA.',
-    tags: ['React', 'TypeScript', 'Tailwind CSS'],
-    imageUrl: '/projects/medicare/screenshot.png',
-    liveUrl: 'https://medicare-azure-one.vercel.app/',
-    githubUrl: 'https://github.com/angelmarcos-ux/medicare-'
-  },
-  {
     folder: '3d-print-hub',
     title: '3D Print Hub',
     category: 'Marketplace / Web',
