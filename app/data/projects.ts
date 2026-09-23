@@ -170,6 +170,7 @@ export const projectsData = [
     description: 'Automated valuation model (AVM) for commercial real estate utilizing geospatial data and market sentiment.',
     tags: ['Python', 'Django', 'Nuxt 3', 'PostGIS'],
     imageUrl: '/projects/project-16/screenshot.png',
+    liveUrl: 'https://proptechvaluator.vercel.app/',
   },
   {
     folder: 'project-17',
