@@ -169,7 +169,7 @@ export const projectsData = [
     type: 'Web',
     description: 'Automated valuation model (AVM) for commercial real estate utilizing geospatial data and market sentiment.',
     tags: ['Python', 'Django', 'Nuxt 3', 'PostGIS'],
-    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=real%20estate%20commercial%20property%20map%20dashboard%20dark%20mode&image_size=landscape_16_9'
+    imageUrl: '/projects/project-16/screenshot.png',
   },
   {
     folder: 'project-17',
@@ -178,7 +178,7 @@ export const projectsData = [
     type: 'Web',
     description: 'Unified inventory and warehouse management system syncing physical stores with global online channels.',
     tags: ['SvelteKit', 'NestJS', 'GraphQL', 'Prisma'],
-    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=retail%20warehouse%20inventory%20management%20dashboard%20dark%20theme&image_size=landscape_16_9'
+    imageUrl: '/projects/project-17/screenshot.png',
   },
   {
     folder: 'project-18',
@@ -187,7 +187,7 @@ export const projectsData = [
     type: 'Web',
     description: 'Infrastructure-as-code visualization tool that automatically generates Terraform scripts from drag-and-drop UI architectures.',
     tags: ['Vue 3', 'Go', 'Terraform', 'Docker'],
-    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=cloud%20infrastructure%20architecture%20node%20graph%20ui%20dark%20mode&image_size=landscape_16_9'
+    imageUrl: '/projects/project-18/screenshot.png',
   },
   {
     folder: 'project-19',
@@ -205,7 +205,7 @@ export const projectsData = [
     type: 'Web',
     description: 'Real-time cryptography analytics platform mapping post-quantum vulnerability exposures in enterprise networks.',
     tags: ['Rust', 'WASM', 'React', 'ClickHouse'],
-    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=cryptography%20cybersecurity%20analytics%20dashboard%20dark%20neon&image_size=landscape_16_9'
+    imageUrl: '/projects/project-20/screenshot.png',
   },
   {
     folder: 'project-21',
@@ -223,7 +223,7 @@ export const projectsData = [
     type: 'Web',
     description: 'Manufacturing execution system tracking factory floor metrics, OEE, and machine downtime in real-time.',
     tags: ['Angular', 'C#', '.NET Core', 'SQL Server'],
-    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=manufacturing%20factory%20metrics%20dashboard%20dark%20theme&image_size=landscape_16_9'
+    imageUrl: '/projects/project-22/screenshot.png',
   },
   {
     folder: 'project-23',
@@ -250,6 +250,6 @@ export const projectsData = [
     type: 'Web',
     description: 'Spatial computing workspace enabling remote engineering teams to collaborate on 3D CAD models simultaneously.',
     tags: ['WebXR', 'Three.js', 'Go', 'WebSockets'],
-    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=spatial%20computing%20vr%20cad%20collaboration%20dashboard%20dark%20mode&image_size=landscape_16_9'
+    imageUrl: '/projects/project-25/screenshot.png',
   }
 ];
