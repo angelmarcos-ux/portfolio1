@@ -104,7 +104,8 @@ export const projectsData = [
     type: 'Web',
     description: 'Multi-signature institutional wallet architecture for secure storage of digital assets and smart contract execution.',
     tags: ['Solidity', 'Rust', 'Next.js', 'Ethers.js'],
-    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=web3%20crypto%20institutional%20wallet%20dashboard%20dark%20mode%20secure&image_size=landscape_16_9'
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=web3%20crypto%20institutional%20wallet%20dashboard%20dark%20mode%20secure&image_size=landscape_16_9',
+    liveUrl: 'https://chainvaultcustody.vercel.app/'
   },
   {
     folder: 'project-10',
@@ -122,7 +123,8 @@ export const projectsData = [
     type: 'Web',
     description: 'Ultra-low latency live streaming platform utilizing WebRTC and edge-distributed transcoding nodes.',
     tags: ['Node.js', 'WebRTC', 'React', 'FFmpeg'],
-    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=live%20streaming%20media%20platform%20dashboard%20dark%20mode%20neon&image_size=landscape_16_9'
+    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=live%20streaming%20media%20platform%20dashboard%20dark%20mode%20neon&image_size=landscape_16_9',
+    liveUrl: 'https://omnistreammmedia.vercel.app/'
   },
   {
     folder: 'project-12',
