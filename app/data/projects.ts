@@ -251,5 +251,6 @@ export const projectsData = [
     description: 'Spatial computing workspace enabling remote engineering teams to collaborate on 3D CAD models simultaneously.',
     tags: ['WebXR', 'Three.js', 'Go', 'WebSockets'],
     imageUrl: '/projects/project-25/screenshot.png',
+    liveUrl: 'https://horizonxrcollaborative.vercel.app/',
   }
 ];
