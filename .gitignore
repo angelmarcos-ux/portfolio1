@@ -21,6 +21,7 @@ apps/*/src/**/*.js.map
 .DS_Store
 .fleet
 .idea
+hostinger-package/
 
 # Local env files
 .env
