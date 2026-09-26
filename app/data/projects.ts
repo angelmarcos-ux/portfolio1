@@ -215,7 +215,7 @@ export const projectsData = [
     type: 'Mobile',
     description: 'Secure, end-to-end encrypted messaging and document sharing app for legal professionals and clients.',
     tags: ['React Native', 'Signal Protocol', 'Node.js'],
-    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=secure%20encrypted%20messaging%20mobile%20app%20ui%20dark%20mode&image_size=landscape_16_9'
+    imageUrl: '/projects/project-21/screenshot.png'
   },
   {
     folder: 'project-22',
