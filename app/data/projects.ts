@@ -77,7 +77,8 @@ export const projectsData = [
     type: 'Web',
     description: 'Zero-trust identity access management system featuring biometric authentication and behavioral anomaly detection.',
     tags: ['Go', 'Vue 3', 'WebAuthn', 'Redis'],
-    imageUrl: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=cybersecurity%20identity%20management%20dashboard%20dark%20neon%20tech&image_size=landscape_16_9'
+    imageUrl: '/projects/project-6/screenshot.png',
+    liveUrl: 'https://securedge.vercel.app/'
   },
   {
     folder: 'project-7',

@@ -177,6 +177,25 @@ export const projectDetails: Record<string, ProjectDetail> = {
       'React Native clients talking a Signal-protocol-derived session over a Node.js relay that stores ciphertext only. Because the server is zero-knowledge, a compromise of the backend exposes no message content.',
   },
 
+  'project-6': {
+    purpose:
+      'A zero-trust identity console that continuously scores every session and user, then revokes or quarantines anything that looks wrong — before a credential is ever used against the crown jewels.',
+    problem:
+      'Most identity tooling tells you after the fact. MFA gets phished, an account gets disabled, and the audit trail is a spreadsheet nobody reads. Continuous evaluation catches the impossible travel and the odd-volume download while the session is still open, not a week later in a breach report.',
+    features: [
+      'Behavioural anomaly detection with confidence scoring',
+      'Impossible-travel detection across geolocated sessions',
+      'Brute-force detection with automatic rate limiting',
+      'Continuous session risk scoring and trust-tier assignment',
+      'One-click quarantine and session revocation',
+      'Tiered policy engine from P0 to P2 with enforcement state',
+      'MFA posture tracking including passkey/FIDO2 and weak fallbacks',
+      'Live authentication volume and denial-rate telemetry',
+    ],
+    architecture:
+      'A Go identity service evaluating risk per request, paired with a Vue 3 console and Redis holding short-lived session state. WebAuthn handles the passkey ceremony, and every scoring decision is written to an append-only audit trail so an enforcement action can be explained after the fact.',
+  },
+
   'project-25': {
     purpose:
       'A spatial computing workspace where distributed engineering teams gather inside the same 3D CAD model to review designs together.',
