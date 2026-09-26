@@ -215,7 +215,8 @@ export const projectsData = [
     type: 'Mobile',
     description: 'Secure, end-to-end encrypted messaging and document sharing app for legal professionals and clients.',
     tags: ['React Native', 'Signal Protocol', 'Node.js'],
-    imageUrl: '/projects/project-21/screenshot.png'
+    imageUrl: '/projects/project-21/screenshot.png',
+    liveUrl: 'https://legaltech-gilt.vercel.app/'
   },
   {
     folder: 'project-22',

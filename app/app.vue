@@ -157,12 +157,22 @@
               class="glass-card p-6 flex flex-col h-full group hover:-translate-y-2 transition-transform duration-300"
               v-motion-slide-visible-once-bottom 
               :delay="(index % 3) * 100"
+              :role="hasDetails(project) ? 'button' : undefined"
+              :tabindex="hasDetails(project) ? 0 : undefined"
+              :aria-label="hasDetails(project) ? `View details for ${project.title}` : undefined"
+              :class="hasDetails(project) ? 'cursor-pointer' : ''"
+              @click="hasDetails(project) && (selectedProject = project)"
+              @keydown.enter="hasDetails(project) && (selectedProject = project)"
+              @keydown.space.prevent="hasDetails(project) && (selectedProject = project)"
             >
               <div class="aspect-video bg-slate-900 rounded-xl overflow-hidden relative mb-6 group-hover:shadow-2xl transition-all duration-300">
                 <img :src="project.imageUrl" :alt="project.title" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105" loading="lazy" />
                 <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-80"></div>
                 <div class="absolute bottom-4 left-4 z-10">
                   <div class="px-3 py-1 bg-black/60 backdrop-blur-md rounded-md border border-white/10 flex items-center gap-2">
+                    <span v-if="hasDetails(project)" class="text-[11px] font-semibold text-slate-200 flex items-center gap-1.5">
+                      <Info class="w-3 h-3" /> Click for details
+                    </span>
                   </div>
                 </div>
               </div>
@@ -182,10 +192,19 @@
                   </span>
                 </div>
                 <div class="flex items-center gap-4">
-                  <a :href="project.liveUrl || '#'" target="_blank" class="inline-flex items-center gap-2 text-white text-sm font-semibold hover:text-blue-400 transition-colors">
+                  <a v-if="project.liveUrl" :href="project.liveUrl" target="_blank" rel="noopener" @click.stop
+                    class="inline-flex items-center gap-2 text-white text-sm font-semibold hover:text-blue-400 transition-colors">
                     View Project <ExternalLink class="w-4 h-4" />
                   </a>
-                  <a v-if="project.githubUrl" :href="project.githubUrl" target="_blank" class="inline-flex items-center gap-2 text-slate-400 text-sm hover:text-white transition-colors">
+                  <button v-else-if="hasDetails(project)" @click.stop="selectedProject = project"
+                    class="inline-flex items-center gap-2 text-white text-sm font-semibold hover:text-blue-400 transition-colors">
+                    View Details <Info class="w-4 h-4" />
+                  </button>
+                  <button v-if="hasDetails(project)" @click.stop="selectedProject = project"
+                    class="inline-flex items-center gap-2 text-slate-300 text-sm font-medium hover:text-white transition-colors">
+                    <Info class="w-4 h-4" /> Details
+                  </button>
+                  <a v-if="project.githubUrl" :href="project.githubUrl" target="_blank" rel="noopener" @click.stop class="inline-flex items-center gap-2 text-slate-400 text-sm hover:text-white transition-colors">
                     <Github class="w-4 h-4" /> Code
                   </a>
                 </div>
@@ -213,6 +232,8 @@
         <p>© {{ new Date().getFullYear() }} J.Dev. Built with Nuxt & Tailwind.</p>
       </footer>
     </main>
+
+    <ProjectModal :project="selectedProject" @close="selectedProject = null" />
   </div>
 </template>
 
@@ -221,12 +242,18 @@ import { ref, computed } from 'vue'
 import { 
   ArrowRight, Github, MonitorSmartphone, Smartphone, 
   BrainCircuit, Database, Box, Globe, CheckCircle2, 
-  Brain, ExternalLink, Mail, Folder 
+  Brain, ExternalLink, Mail, Folder, Info
 } from 'lucide-vue-next'
 import { projectsData } from '~/data/projects'
+import { projectDetails } from '~/data/projectDetails'
+import ProjectModal from '~/components/ProjectModal.vue'
 
 const activeCategory = ref('All')
 const categories = ['All', 'Web', 'Mobile', 'Machine Learning']
+
+const selectedProject = ref(null)
+
+const hasDetails = (project) => Boolean(projectDetails[project.folder])
 
 const filteredProjects = computed(() => {
   if (activeCategory.value === 'All') return projectsData
